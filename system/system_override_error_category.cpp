@@ -53,7 +53,7 @@ int main()
 
     do_something(ec);
 
-    if (ec != 0)
+    if (ec.failed())
     {
         std::cerr << "Error: " << ec.message() << std::endl;
         std::cerr << "Error value: " << ec.value() << std::endl;

@@ -10,7 +10,7 @@ set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_DEBUG_LIBS OFF)
 set(Boost_USE_STATIC_LIBS OFF)
 
-find_package(Boost 1.4 REQUIRED
+find_package(Boost 1.86 REQUIRED
     COMPONENTS
         filesystem
 )
