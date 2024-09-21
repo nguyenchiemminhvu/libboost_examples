@@ -33,7 +33,5 @@ int main()
         std::cerr << curPath << " does not exist" << std::endl;
     }
 
-    
-
     return 0;
 }
