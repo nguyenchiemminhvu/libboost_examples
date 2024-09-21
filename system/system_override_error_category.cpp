@@ -32,6 +32,10 @@ public:
 
     virtual boost::system::error_condition default_error_condition(int ev) const noexcept override
     {
+        if (ev >= 2)
+        {
+            return boost::system::errc::make_error_condition(boost::system::errc::operation_not_permitted);
+        }
         return boost::system::error_condition(ev, *this);
     }
 };
@@ -58,6 +62,7 @@ int main()
         std::cerr << "Error: " << ec.message() << std::endl;
         std::cerr << "Error value: " << ec.value() << std::endl;
         std::cerr << "Error category: " << ec.category().name() << std::endl;
+        std::cerr << "Error condition: " << ec.default_error_condition().message() << std::endl;
     }
     else
     {
