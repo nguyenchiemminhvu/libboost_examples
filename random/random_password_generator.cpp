@@ -1,15 +1,59 @@
 #include <iostream>
 #include <string>
 #include <boost/random.hpp>
+#include <boost/random/random_device.hpp>
 #include <boost/program_options.hpp>
 
-#define DEFAULT_NUMBER_OF_LOWERCASE 10
-#define DEFAULT_NUMBER_OF_UPPERCASE 5
-#define DEFAULT_NUMBER_OF_SPECIAL 5
+#define DEFAULT_NUMBER_MIN 5
+#define DEFAULT_NUMBER_MAX 10
+
+const std::string lower_candidates("abcdefghijklmnopqrstuvwxyz");
+const std::string upper_candidates("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+const std::string special_candidates("~!@#$%^&*,.");
+
+void shuffle(std::string& s)
+{
+    boost::random::random_device rd;
+    boost::random::mt19937 rng(rd());
+
+    for (std::size_t i = s.length() - 1; i > 0; i--)
+    {
+        boost::random::uniform_int_distribution<> dist(0, i);
+
+        std::size_t chosen_idx = dist(rng);
+        std::swap(s[i], s[chosen_idx]);
+    }
+}
 
 std::string generating_password(int lower, int upper, int special)
 {
-    return "";
+    std::string password;
+
+    boost::random::random_device rd;
+    boost::random::mt19937 rng(rd());
+
+    boost::random::uniform_int_distribution<> lower_dist(0, lower_candidates.size() - 1);
+    boost::random::uniform_int_distribution<> upper_dist(0, upper_candidates.size() - 1);
+    boost::random::uniform_int_distribution<> special_dist(0, special_candidates.size() - 1);
+
+    for (int i = 0; i < lower; i++)
+    {
+        password += lower_candidates[lower_dist(rng)];
+    }
+
+    for (int i = 0; i < upper; i++)
+    {
+        password += upper_candidates[upper_dist(rng)];
+    }
+
+    for (int i = 0; i < special; i++)
+    {
+        password += special_candidates[special_dist(rng)];
+    }
+
+    shuffle(password);
+
+    return password;
 }
 
 int main(int argc, char** argv)
@@ -33,6 +77,10 @@ int main(int argc, char** argv)
             return 0;
         }
 
+        boost::random::random_device rd;
+        boost::random::mt19937 rng(rd());
+        boost::random::uniform_int_distribution<> default_dist(DEFAULT_NUMBER_MIN, DEFAULT_NUMBER_MAX);
+
         int count_lower = 0;
         int count_upper = 0;
         int count_special = 0;
@@ -41,31 +89,34 @@ int main(int argc, char** argv)
         {
             count_lower = vm["lower"].as<int>();
         }
+        else
+        {
+            count_lower = default_dist(rng);
+        }
 
         if (vm.count("upper"))
         {
             count_upper = vm["upper"].as<int>();
+        }
+        else
+        {
+            count_upper = default_dist(rng);
         }
 
         if (vm.count("special"))
         {
             count_special = vm["special"].as<int>();
         }
-
-        if (count_lower == 0 && count_upper == 0 && count_special == 0)
-        {
-            std::cout << "No lower/upper/special letters specified, generating a password with default option" << std::endl;
-            count_lower = DEFAULT_NUMBER_OF_LOWERCASE;
-            count_upper = DEFAULT_NUMBER_OF_UPPERCASE;
-            count_special = DEFAULT_NUMBER_OF_SPECIAL;
-        }
         else
         {
-            std::cout << "Generating a password containing:\n" 
+            count_special = default_dist(rng);
+        }
+
+        std::cout << "Generating a password containing:\n" 
                 << count_lower << " lower-case letters\n"
                 << count_upper << " upper-case letters\n" 
-                << count_special << " special letters" << std::endl;
-        }
+                << count_special << " special letters\n" 
+                << std::endl;
 
         std::string password = generating_password(count_lower, count_upper, count_special);
         std::cout << password << std::endl;
