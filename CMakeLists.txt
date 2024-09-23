@@ -14,6 +14,7 @@ find_package(Boost 1.86 REQUIRED
     COMPONENTS
         system
         filesystem
+        random
         program_options
 )
 
