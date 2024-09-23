@@ -12,7 +12,9 @@ set(Boost_USE_STATIC_LIBS OFF)
 
 find_package(Boost 1.86 REQUIRED
     COMPONENTS
+        system
         filesystem
+        program_options
 )
 
 function(compile_executables target_name file_path)
