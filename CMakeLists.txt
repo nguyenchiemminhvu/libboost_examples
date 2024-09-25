@@ -17,6 +17,7 @@ find_package(Boost 1.86 REQUIRED
         random
         program_options
         json
+        serialization
 )
 
 function(compile_executables target_name file_path)
