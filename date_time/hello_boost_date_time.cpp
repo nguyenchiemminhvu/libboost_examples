@@ -14,5 +14,12 @@ int main()
 
     std::cout << "Release version: " << std::to_string(d.year()) + "." + std::to_string(d.week_number()) + "-" + std::to_string(d.day_of_week()) << std::endl;
 
+    // const char sep_char[] = {',','-','.',' ','/','\0'};
+    std::cout << boost::gregorian::from_string("2024.09.25") << std::endl;
+
+    std::cout << (boost::gregorian::from_string("2024.09.25") - boost::gregorian::from_string("2024.09.24")).days() << std::endl;
+
+    std::cout << boost::gregorian::from_string("2024.09.25") + boost::gregorian::date_duration(7) << std::endl;
+
     return 0;
 }
