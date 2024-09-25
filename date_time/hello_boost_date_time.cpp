@@ -21,5 +21,15 @@ int main()
 
     std::cout << boost::gregorian::from_string("2024.09.25") + boost::gregorian::date_duration(7) << std::endl;
 
+    std::cout << boost::gregorian::from_undelimited_string("20240925") << std::endl;
+
+    struct tm tm_date = boost::gregorian::to_tm(boost::gregorian::from_undelimited_string("20240925"));
+    std::cout << 1900 + tm_date.tm_year << std::endl;
+    std::cout << 1 + tm_date.tm_mon << std::endl;
+    std::cout << tm_date.tm_mday << std::endl;
+    std::cout << tm_date.tm_hour << std::endl;
+    std::cout << tm_date.tm_min << std::endl;
+    std::cout << tm_date.tm_sec << std::endl;
+
     return 0;
 }
