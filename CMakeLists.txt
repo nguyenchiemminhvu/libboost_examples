@@ -18,6 +18,15 @@ find_package(Boost 1.86 REQUIRED
         program_options
         json
         serialization
+        container
+        date_time
+        graph
+        math_c99
+        math_c99f
+        math_c99l
+        math_tr1
+        math_tr1f
+        math_tr1l
 )
 
 function(compile_executables target_name file_path)
