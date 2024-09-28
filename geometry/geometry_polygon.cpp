@@ -8,8 +8,8 @@ int main()
     boost::geometry::append(poly, boost::geometry::model::point<double, 2, boost::geometry::cs::cartesian>(0.0, 0.0));
     boost::geometry::append(poly, boost::geometry::model::point<double, 2, boost::geometry::cs::cartesian>(0.0, 5.0));
     boost::geometry::append(poly, boost::geometry::model::point<double, 2, boost::geometry::cs::cartesian>(5.0, 5.0));
-    boost::geometry::append(poly, boost::geometry::model::point<double, 2, boost::geometry::cs::cartesian>(7.0, 0.0));
-    boost::geometry::append(poly, boost::geometry::model::point<double, 2, boost::geometry::cs::cartesian>(0.0, 0.0));
+    poly.outer().push_back(boost::geometry::model::point<double, 2, boost::geometry::cs::cartesian>(7.0, 0.0));
+    poly.outer().push_back(boost::geometry::model::point<double, 2, boost::geometry::cs::cartesian>(0.0, 0.0));
 
     std::cout << "Area of polygon: " << boost::geometry::area(poly) << std::endl;
 
